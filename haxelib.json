@@ -9,7 +9,7 @@
   "contributors": [
     "kevinresol"
   ],
-  "releasenote": "Initial release",
-  "version": "0.9.0",
+  "releasenote": "Expose array methods",
+  "version": "0.9.1",
   "dependencies": {}
 }
