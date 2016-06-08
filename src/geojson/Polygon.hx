@@ -6,7 +6,6 @@ abstract Polygon(GeoJsonPolygon) from GeoJsonPolygon to GeoJsonPolygon {
 	
 	public var points(get, set):Line;
 	public var type(get, never):String;
-	inline function get_type() return this.type;
 	
 	public function new(points:Line)
 		this = {
@@ -19,6 +18,8 @@ abstract Polygon(GeoJsonPolygon) from GeoJsonPolygon to GeoJsonPolygon {
 		
 	inline function set_points(v:Line)
 		return this.coordinates = v;
+		
+	inline function get_type() return this.type;
 }
 
 private typedef GeoJsonPolygon = {

@@ -7,7 +7,6 @@ abstract MultiLineString(GeoJsonMultiLineString) from GeoJsonMultiLineString to 
 	
 	public var lines(get, set):Array<Line>;
 	public var type(get, never):String;
-	inline function get_type() return this.type;
 	
 	public function new(lines:Array<Line>)
 		this = {
@@ -20,6 +19,8 @@ abstract MultiLineString(GeoJsonMultiLineString) from GeoJsonMultiLineString to 
 		
 	inline function set_lines(v)
 		return this.coordinates = v;
+		
+	inline function get_type() return this.type;
 }
 
 private typedef GeoJsonMultiLineString = {

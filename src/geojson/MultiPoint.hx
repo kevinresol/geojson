@@ -6,7 +6,6 @@ abstract MultiPoint(GeoJsonMultiPoint) from GeoJsonMultiPoint to GeoJsonMultiPoi
 	
 	public var points(get, set):Array<Coordinates>;
 	public var type(get, never):String;
-	inline function get_type() return this.type;
 	
 	public function new(points:Array<Coordinates>)
 		this = {
@@ -19,6 +18,8 @@ abstract MultiPoint(GeoJsonMultiPoint) from GeoJsonMultiPoint to GeoJsonMultiPoi
 		
 	inline function set_points(v)
 		return this.coordinates = v;
+		
+	inline function get_type() return this.type;
 }
 
 private typedef GeoJsonMultiPoint = {

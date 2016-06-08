@@ -6,7 +6,6 @@ abstract LineString(GeoJsonLineString) from GeoJsonLineString to GeoJsonLineStri
 	
 	public var points(get, set):Line;
 	public var type(get, never):String;
-	inline function get_type() return this.type;
 	
 	public function new(line:Line)
 		this = {
@@ -19,6 +18,8 @@ abstract LineString(GeoJsonLineString) from GeoJsonLineString to GeoJsonLineStri
 		
 	inline function set_points(v)
 		return this.coordinates = v;
+		
+	inline function get_type() return this.type;
 }
 
 private typedef GeoJsonLineString = {

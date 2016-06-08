@@ -6,7 +6,6 @@ abstract MultiRingPolygon(GeoJsonMultiRingPolygon) from GeoJsonMultiRingPolygon 
 	
 	public var rings(get, set):Array<Line>;
 	public var type(get, never):String;
-	inline function get_type() return this.type;
 	
 	public function new(rings:Array<Line>)
 		this = {
@@ -19,6 +18,8 @@ abstract MultiRingPolygon(GeoJsonMultiRingPolygon) from GeoJsonMultiRingPolygon 
 		
 	inline function set_rings(v)
 		return this.coordinates = v;
+		
+	inline function get_type() return this.type;
 }
 
 private typedef GeoJsonMultiRingPolygon = {
