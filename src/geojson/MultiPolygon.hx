@@ -5,10 +5,10 @@ import geojson.util.*;
 @:forward
 abstract MultiPolygon(GeoJsonMultiPolygon) from GeoJsonMultiPolygon to GeoJsonMultiPolygon {
 	
-	public var polygons(get, set):Array<Line>;
+	public var polygons(get, set):Array<Lines>;
 	public var type(get, never):String;
 	
-	public inline function new(polygons:Array<Line>)
+	public inline function new(polygons:Array<Lines>)
 		this = {
 			type: 'MultiPolygon',
 			coordinates: polygons,
@@ -25,5 +25,5 @@ abstract MultiPolygon(GeoJsonMultiPolygon) from GeoJsonMultiPolygon to GeoJsonMu
 
 private typedef GeoJsonMultiPolygon = {
 	type:String,
-	coordinates:Array<Line>,
+	coordinates:Array<Lines>,
 }
