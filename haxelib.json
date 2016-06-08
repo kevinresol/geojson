@@ -9,7 +9,7 @@
   "contributors": [
     "kevinresol"
   ],
-  "releasenote": "Expose array methods",
-  "version": "0.9.1",
+  "releasenote": "Correct Polygon's spec",
+  "version": "0.9.2",
   "dependencies": {}
 }
