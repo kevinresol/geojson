@@ -28,7 +28,7 @@ class RunTests extends TestCase{
 	inline function c(lat, long) return new Coordinates(lat, long);
 	
 	function testPoint() {
-		var geo = new Point(c(1.2, 2.1));
+		var geo = new Point(1.2, 2.1);
 		assertEquals('Point', geo.type);
 		assertEquals(2.1, geo.longitude);
 		assertEquals(1.2, geo.latitude);
