@@ -27,11 +27,28 @@ class RunTests extends TestCase{
 	
 	inline function c(lat, long) return new Coordinates(lat, long);
 	
+	function testCoordinates() {
+		var c = new Coordinates(1.1, 2.2);
+		var f:Array<Float> = c;
+		assertEquals(1.1, f[1]);
+		assertEquals(2.2, f[0]);
+	}
+	
 	function testPoint() {
 		var geo = new Point(1.2, 2.1);
 		assertEquals('Point', geo.type);
 		assertEquals(2.1, geo.longitude);
 		assertEquals(1.2, geo.latitude);
+		
+		geo.latitude = 3.1;
+		geo.longitude = 4.2;
+		assertEquals(3.1, geo.latitude);
+		assertEquals(4.2, geo.longitude);
+		
+		geo.latitude += 1;
+		geo.longitude -= 1;
+		assertEquals(4.1, geo.latitude);
+		assertEquals(3.2, geo.longitude);
 	}
 	
 	function testMultiPoint() {
@@ -41,6 +58,10 @@ class RunTests extends TestCase{
 		assertEquals(1.2, geo.points[0].latitude);
 		assertEquals(2.2, geo.points[1].longitude);
 		assertEquals(1.3, geo.points[1].latitude);
+		
+		geo.points.push(new Coordinates(1.4, 2.3));
+		assertEquals(2.3, geo.points[2].longitude);
+		assertEquals(1.4, geo.points[2].latitude);
 	}
 	
 	function testLineString() {
@@ -50,6 +71,10 @@ class RunTests extends TestCase{
 		assertEquals(1.2, geo.points[0].latitude);
 		assertEquals(2.2, geo.points[1].longitude);
 		assertEquals(1.3, geo.points[1].latitude);
+		
+		geo.points.push(new Coordinates(1.4, 2.3));
+		assertEquals(2.3, geo.points[2].longitude);
+		assertEquals(1.4, geo.points[2].latitude);
 	}
 	
 	function testMultiLineString() {
@@ -63,6 +88,12 @@ class RunTests extends TestCase{
 		assertEquals(1.4, geo.lines[1].points[0].latitude);
 		assertEquals(2.4, geo.lines[1].points[1].longitude);
 		assertEquals(1.5, geo.lines[1].points[1].latitude);
+		
+		geo.lines.push(new Line([c(1.6, 2.5),c(1.7, 2.6)]));
+		assertEquals(2.5, geo.lines[2].points[0].longitude);
+		assertEquals(1.6, geo.lines[2].points[0].latitude);
+		assertEquals(2.6, geo.lines[2].points[1].longitude);
+		assertEquals(1.7, geo.lines[2].points[1].latitude);
 	}
 	
 	function testPolygon() {
@@ -72,6 +103,10 @@ class RunTests extends TestCase{
 		assertEquals(1.2, geo.points[0].latitude);
 		assertEquals(2.2, geo.points[1].longitude);
 		assertEquals(1.3, geo.points[1].latitude);
+		
+		geo.points.push(new Coordinates(1.4, 2.3));
+		assertEquals(2.3, geo.points[2].longitude);
+		assertEquals(1.4, geo.points[2].latitude);
 	}
 	
 	function testMultiRingPolygon() {
@@ -85,6 +120,12 @@ class RunTests extends TestCase{
 		assertEquals(1.4, geo.rings[1].points[0].latitude);
 		assertEquals(2.4, geo.rings[1].points[1].longitude);
 		assertEquals(1.5, geo.rings[1].points[1].latitude);
+		
+		geo.rings.push(new Line([c(1.6, 2.5),c(1.7, 2.6)]));
+		assertEquals(2.5, geo.rings[2].points[0].longitude);
+		assertEquals(1.6, geo.rings[2].points[0].latitude);
+		assertEquals(2.6, geo.rings[2].points[1].longitude);
+		assertEquals(1.7, geo.rings[2].points[1].latitude);
 	}
 	
 	function testMultiPolygon() {
@@ -98,6 +139,12 @@ class RunTests extends TestCase{
 		assertEquals(1.4, geo.polygons[1].points[0].latitude);
 		assertEquals(2.4, geo.polygons[1].points[1].longitude);
 		assertEquals(1.5, geo.polygons[1].points[1].latitude);
+		
+		geo.polygons.push(new Line([c(1.6, 2.5),c(1.7, 2.6)]));
+		assertEquals(2.5, geo.polygons[2].points[0].longitude);
+		assertEquals(1.6, geo.polygons[2].points[0].latitude);
+		assertEquals(2.6, geo.polygons[2].points[1].longitude);
+		assertEquals(1.7, geo.polygons[2].points[1].latitude);
 	}
 	
 	

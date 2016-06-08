@@ -4,7 +4,7 @@ import geojson.util.*;
 
 abstract Polygon(GeoJsonPolygon) from GeoJsonPolygon to GeoJsonPolygon {
 	
-	public var points(get, set):Line;
+	public var points(get, set):Array<Coordinates>;
 	public var type(get, never):String;
 	
 	public inline function new(points:Line)
@@ -24,5 +24,5 @@ abstract Polygon(GeoJsonPolygon) from GeoJsonPolygon to GeoJsonPolygon {
 
 private typedef GeoJsonPolygon = {
 	type:String,
-	coordinates:Line,
+	coordinates:Array<Coordinates>,
 }

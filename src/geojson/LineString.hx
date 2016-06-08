@@ -4,7 +4,7 @@ import geojson.util.*;
 
 abstract LineString(GeoJsonLineString) from GeoJsonLineString to GeoJsonLineString {
 	
-	public var points(get, set):Line;
+	public var points(get, set):Array<Coordinates>;
 	public var type(get, never):String;
 	
 	public inline function new(line:Line)
@@ -24,5 +24,5 @@ abstract LineString(GeoJsonLineString) from GeoJsonLineString to GeoJsonLineStri
 
 private typedef GeoJsonLineString = {
 	type:String,
-	coordinates:Line,
+	coordinates:Array<Coordinates>,
 }
