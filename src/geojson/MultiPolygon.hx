@@ -8,7 +8,7 @@ abstract MultiPolygon(GeoJsonMultiPolygon) from GeoJsonMultiPolygon to GeoJsonMu
 	public var polygons(get, set):Array<Line>;
 	public var type(get, never):String;
 	
-	public function new(polygons:Array<Line>)
+	public inline function new(polygons:Array<Line>)
 		this = {
 			type: 'MultiPolygon',
 			coordinates: polygons,

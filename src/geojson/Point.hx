@@ -9,10 +9,10 @@ abstract Point(GeoJsonPoint) from GeoJsonPoint to GeoJsonPoint {
 	public var longitude(get, set):Float;
 	public var type(get, never):String;
 	
-	public function new(point:Coordinates)
+	public inline function new(latitude:Float, longitude:Float)
 		this = {
 			type: 'Point',
-			coordinates: point,
+			coordinates: new Coordinates(latitude, longitude),
 		}
 		
 	inline function get_latitude() return this.coordinates[1];

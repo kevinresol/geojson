@@ -7,7 +7,7 @@ abstract MultiRingPolygon(GeoJsonMultiRingPolygon) from GeoJsonMultiRingPolygon 
 	public var rings(get, set):Array<Line>;
 	public var type(get, never):String;
 	
-	public function new(rings:Array<Line>)
+	public inline function new(rings:Array<Line>)
 		this = {
 			type: 'Polygon',
 			coordinates: rings,

@@ -8,7 +8,7 @@ abstract MultiLineString(GeoJsonMultiLineString) from GeoJsonMultiLineString to 
 	public var lines(get, set):Array<Line>;
 	public var type(get, never):String;
 	
-	public function new(lines:Array<Line>)
+	public inline function new(lines:Array<Line>)
 		this = {
 			type: 'MultiLineString',
 			coordinates: lines,

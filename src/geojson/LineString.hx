@@ -7,7 +7,7 @@ abstract LineString(GeoJsonLineString) from GeoJsonLineString to GeoJsonLineStri
 	public var points(get, set):Line;
 	public var type(get, never):String;
 	
-	public function new(line:Line)
+	public inline function new(line:Line)
 		this = {
 			type: 'LineString',
 			coordinates: line,

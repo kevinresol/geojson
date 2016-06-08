@@ -7,7 +7,7 @@ abstract Polygon(GeoJsonPolygon) from GeoJsonPolygon to GeoJsonPolygon {
 	public var points(get, set):Line;
 	public var type(get, never):String;
 	
-	public function new(points:Line)
+	public inline function new(points:Line)
 		this = {
 			type: 'Polygon',
 			coordinates: points,
