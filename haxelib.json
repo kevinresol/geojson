@@ -1,0 +1,15 @@
+{
+  "name": "geojson",
+  "license": "MIT",
+  "tags": [
+    "cross",
+    "geojson"
+  ],
+  "classPath": "src",
+  "contributors": [
+    "kevinresol"
+  ],
+  "releasenote": "Initial release",
+  "version": "0.0.1",
+  "dependencies": {}
+}
