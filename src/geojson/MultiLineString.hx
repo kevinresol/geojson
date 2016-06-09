@@ -2,14 +2,14 @@ package geojson;
 
 import geojson.util.*;
 
-abstract MultiLineString(GeoJsonMultiLineString) from GeoJsonMultiLineString to GeoJsonMultiLineString {
+abstract MultiLineString(GeoJson<Array<Line>>) from GeoJson<Array<Line>> to GeoJson<Array<Line>> {
 	
 	public var lines(get, set):Array<Line>;
-	public var type(get, never):String;
+	public var type(get, never):GeoJsonType<Array<Line>>;
 	
 	public inline function new(lines:Array<Line>)
 		this = {
-			type: 'MultiLineString',
+			type: MultiLineString,
 			coordinates: lines,
 		}
 		
@@ -20,9 +20,4 @@ abstract MultiLineString(GeoJsonMultiLineString) from GeoJsonMultiLineString to 
 		return this.coordinates = v;
 		
 	inline function get_type() return this.type;
-}
-
-private typedef GeoJsonMultiLineString = {
-	type:String,
-	coordinates:Array<Line>,
 }

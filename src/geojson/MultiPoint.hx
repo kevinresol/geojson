@@ -2,14 +2,14 @@ package geojson;
 
 import geojson.util.*;
 
-abstract MultiPoint(GeoJsonMultiPoint) from GeoJsonMultiPoint to GeoJsonMultiPoint {
+abstract MultiPoint(GeoJson<Array<Coordinates>>) from GeoJson<Array<Coordinates>> to GeoJson<Array<Coordinates>> {
 	
 	public var points(get, set):Array<Coordinates>;
-	public var type(get, never):String;
+	public var type(get, never):GeoJsonType<Array<Coordinates>>;
 	
 	public inline function new(points:Array<Coordinates>)
 		this = {
-			type: 'MultiPoint',
+			type: MultiPoint,
 			coordinates: points,
 		}
 		
@@ -20,9 +20,4 @@ abstract MultiPoint(GeoJsonMultiPoint) from GeoJsonMultiPoint to GeoJsonMultiPoi
 		return this.coordinates = v;
 		
 	inline function get_type() return this.type;
-}
-
-private typedef GeoJsonMultiPoint = {
-	type:String,
-	coordinates:Array<Coordinates>,
 }

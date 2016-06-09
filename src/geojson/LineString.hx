@@ -2,14 +2,14 @@ package geojson;
 
 import geojson.util.*;
 
-abstract LineString(GeoJsonLineString) from GeoJsonLineString to GeoJsonLineString {
+abstract LineString(GeoJson<Array<Coordinates>>) from GeoJson<Array<Coordinates>> to GeoJson<Array<Coordinates>> {
 	
 	public var points(get, set):Array<Coordinates>;
-	public var type(get, never):String;
+	public var type(get, never):GeoJsonType<Array<Coordinates>>;
 	
 	public inline function new(line:Array<Coordinates>)
 		this = {
-			type: 'LineString',
+			type: LineString,
 			coordinates: line,
 		}
 		
@@ -20,9 +20,4 @@ abstract LineString(GeoJsonLineString) from GeoJsonLineString to GeoJsonLineStri
 		return this.coordinates = v;
 		
 	inline function get_type() return this.type;
-}
-
-private typedef GeoJsonLineString = {
-	type:String,
-	coordinates:Array<Coordinates>,
 }

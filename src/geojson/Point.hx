@@ -1,16 +1,17 @@
 package geojson;
 
 import geojson.util.*;
+import geojson.util.GeoJsonType;
 
-abstract Point(GeoJsonPoint) from GeoJsonPoint to GeoJsonPoint {
+abstract Point(GeoJson<Coordinates>) from GeoJson<Coordinates> to GeoJson<Coordinates> {
 	
 	public var latitude(get, set):Float;
 	public var longitude(get, set):Float;
-	public var type(get, never):String;
+	public var type(get, never):GeoJsonType<Coordinates>;
 	
 	public inline function new(latitude:Float, longitude:Float)
 		this = {
-			type: 'Point',
+			type: Point,
 			coordinates: new Coordinates(latitude, longitude),
 		}
 		
@@ -19,9 +20,4 @@ abstract Point(GeoJsonPoint) from GeoJsonPoint to GeoJsonPoint {
 	inline function set_latitude(v) return this.coordinates[1] = v;
 	inline function set_longitude(v) return this.coordinates[0] = v;
 	inline function get_type() return this.type;
-}
-
-private typedef GeoJsonPoint = {
-	type:String,
-	coordinates:Coordinates,
 }
