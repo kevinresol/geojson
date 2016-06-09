@@ -9,7 +9,7 @@
   "contributors": [
     "kevinresol"
   ],
-  "releasenote": "Correct Polygon's spec",
-  "version": "0.9.2",
+  "releasenote": "Added GeometryCollection",
+  "version": "0.9.3",
   "dependencies": {}
 }
