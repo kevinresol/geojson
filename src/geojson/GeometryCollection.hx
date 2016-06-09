@@ -9,6 +9,16 @@ abstract GeometryCollection(GeometryCollectionObject) from GeometryCollectionObj
 	public var geometries(get, set):Array<GeoJsonGeometry>;
 	public var type(get, never):String;
 	
+	public static function get<T:GeoJsonGeometry.Typed<T>>(geometry:T):GeoJsonGeometryKind
+		return switch geometry.type {
+			case Point: Point(geometry);
+			case MultiPoint: MultiPoint(geometry);
+			case LineString: LineString(geometry);
+			case MultiLineString: MultiLineString(geometry);
+			case Polygon: Polygon(geometry);
+			case MultiPolygon: MultiPolygon(geometry);
+		}
+	
 	public inline function new(geometries:Array<GeoJsonGeometry>)
 		this = {
 			type: 'GeometryCollection',
@@ -24,4 +34,14 @@ abstract GeometryCollection(GeometryCollectionObject) from GeometryCollectionObj
 private typedef GeometryCollectionObject = {
 	type:String,
 	geometries:Array<GeoJsonGeometry>,
+}
+
+
+enum GeoJsonGeometryKind {
+	Point(geometry:geojson.Point);
+	LineString(geometry:geojson.LineString);
+	Polygon(geometry:geojson.Polygon);
+	MultiPoint(geometry:geojson.MultiPoint);
+	MultiLineString(geometry:geojson.MultiLineString);
+	MultiPolygon(geometry:geojson.MultiPolygon);
 }

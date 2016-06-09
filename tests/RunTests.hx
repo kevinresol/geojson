@@ -158,36 +158,60 @@ class RunTests extends TestCase{
 			new MultiPolygon([[[c(6.1, 6.2),c(6.3, 6.4)]], [[c(6.5, 6.6),c(6.7, 6.8)]]]),
 		]);
 		
-		for(geometry in collection) check(geometry);
+		for(geometry in collection) {
+			// Use a generic function to correctly type the collection objects (no runtime performance penalty)
+			check(geometry);
+			
+			// or use the provided static function which wraps the geometry in a Haxe enum (has runtime performance penalty)
+			switch GeometryCollection.get(geometry) {
+				case Point(geometry):
+					assertEquals(1.1, geometry.latitude);
+					assertEquals(1.2, geometry.longitude);
+				case MultiPoint(geometry):
+					assertEquals(2.1 ,geometry.points[0].latitude);
+					assertEquals(2.2 ,geometry.points[0].longitude);
+				case LineString(geometry):
+					assertEquals(3.1 ,geometry.points[0].latitude);
+					assertEquals(3.2 ,geometry.points[0].longitude);
+				case MultiLineString(geometry):
+					assertEquals(4.1 ,geometry.lines[0].points[0].latitude);
+					assertEquals(4.2 ,geometry.lines[0].points[0].longitude);
+				case Polygon(geometry):
+					assertEquals(5.1 ,geometry.lines[0].points[0].latitude);
+					assertEquals(5.2 ,geometry.lines[0].points[0].longitude);
+				case MultiPolygon(geometry):
+					assertEquals(6.1 ,geometry.polygons[0].lines[0].points[0].latitude);
+					assertEquals(6.2 ,geometry.polygons[0].lines[0].points[0].longitude);
+			}
+		}
+		
 	}
 	
-	/**
-		Use a generic function to correctly type the collection objects
-	**/
-	function check<T:GeoJsonGeometry.Typed<T>>(geometry:T) {
+	inline function check<T:GeoJsonGeometry.Typed<T>>(geometry:T) {
+		// $type(geometry); // check.T, but it will be correctly typed inside the switch block
 		switch geometry.type {
 			case Point:
-				$type(geometry); // geojson.Point
+				// $type(geometry); // geojson.Point
 				assertEquals(1.1, geometry.latitude);
 				assertEquals(1.2, geometry.longitude);
 			case MultiPoint:
-				$type(geometry); // geojson.MultiPoint
+				// $type(geometry); // geojson.MultiPoint
 				assertEquals(2.1 ,geometry.points[0].latitude);
 				assertEquals(2.2 ,geometry.points[0].longitude);
 			case LineString:
-				$type(geometry); // geojson.LineString
+				// $type(geometry); // geojson.LineString
 				assertEquals(3.1 ,geometry.points[0].latitude);
 				assertEquals(3.2 ,geometry.points[0].longitude);
 			case MultiLineString:
-				$type(geometry); // geojson.MultiLineString
+				// $type(geometry); // geojson.MultiLineString
 				assertEquals(4.1 ,geometry.lines[0].points[0].latitude);
 				assertEquals(4.2 ,geometry.lines[0].points[0].longitude);
 			case Polygon:
-				$type(geometry); // geojson.Polygon
+				// $type(geometry); // geojson.Polygon
 				assertEquals(5.1 ,geometry.lines[0].points[0].latitude);
 				assertEquals(5.2 ,geometry.lines[0].points[0].longitude);
 			case MultiPolygon:
-				$type(geometry); // geojson.MultiPolygon
+				// $type(geometry); // geojson.MultiPolygon
 				assertEquals(6.1 ,geometry.polygons[0].lines[0].points[0].latitude);
 				assertEquals(6.2 ,geometry.polygons[0].lines[0].points[0].longitude);
 		}
