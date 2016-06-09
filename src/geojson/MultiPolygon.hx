@@ -2,10 +2,11 @@ package geojson;
 
 import geojson.util.*;
 
-abstract MultiPolygon(GeoJson<Array<Lines>>) from GeoJson<Array<Lines>> to GeoJson<Array<Lines>> {
+private typedef Object = GeoJson<MultiPolygon, Array<Lines>>;
+abstract MultiPolygon(Object) from Object to Object {
 	
 	public var polygons(get, set):Array<Lines>;
-	public var type(get, never):GeoJsonType<Array<Lines>>;
+	public var type(get, never):GeoJsonGeometryType<MultiPolygon>;
 	
 	public inline function new(polygons:Array<Lines>)
 		this = {
@@ -13,11 +14,8 @@ abstract MultiPolygon(GeoJson<Array<Lines>>) from GeoJson<Array<Lines>> to GeoJs
 			coordinates: polygons,
 		}
 		
-	inline function get_polygons()
-		return this.coordinates;
-		
-	inline function set_polygons(v)
-		return this.coordinates = v;
-		
+	inline function get_polygons() return this.coordinates;
+	inline function set_polygons(v) return this.coordinates = v;
 	inline function get_type() return this.type;
+	@:to inline function toGeoJson():GeoJsonGeometry return cast this;
 }

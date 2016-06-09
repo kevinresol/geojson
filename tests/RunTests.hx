@@ -147,5 +147,50 @@ class RunTests extends TestCase{
 		assertEquals(1.7, geo.polygons[2].lines[0].points[1].latitude);
 	}
 	
+	function testGeometryCollection() {
+		
+		var collection = new GeometryCollection([
+			new Point(1.1, 1.2),
+			new MultiPoint([c(2.1, 2.2),c(2.3, 2.4)]),
+			new LineString([c(3.1, 3.2),c(3.3, 3.4)]),
+			new MultiLineString([[c(4.1, 4.2),c(4.3, 4.4)], [c(4.5, 4.6),c(4.7, 4.8)]]),
+			new Polygon([[c(5.1, 5.2),c(5.3, 5.4)]]),
+			new MultiPolygon([[[c(6.1, 6.2),c(6.3, 6.4)]], [[c(6.5, 6.6),c(6.7, 6.8)]]]),
+		]);
+		
+		for(geometry in collection) check(geometry);
+	}
+	
+	/**
+		Use a generic function to correctly type the collection objects
+	**/
+	function check<T:GeoJsonGeometry.Typed<T>>(geometry:T) {
+		switch geometry.type {
+			case Point:
+				$type(geometry); // geojson.Point
+				assertEquals(1.1, geometry.latitude);
+				assertEquals(1.2, geometry.longitude);
+			case MultiPoint:
+				$type(geometry); // geojson.MultiPoint
+				assertEquals(2.1 ,geometry.points[0].latitude);
+				assertEquals(2.2 ,geometry.points[0].longitude);
+			case LineString:
+				$type(geometry); // geojson.LineString
+				assertEquals(3.1 ,geometry.points[0].latitude);
+				assertEquals(3.2 ,geometry.points[0].longitude);
+			case MultiLineString:
+				$type(geometry); // geojson.MultiLineString
+				assertEquals(4.1 ,geometry.lines[0].points[0].latitude);
+				assertEquals(4.2 ,geometry.lines[0].points[0].longitude);
+			case Polygon:
+				$type(geometry); // geojson.Polygon
+				assertEquals(5.1 ,geometry.lines[0].points[0].latitude);
+				assertEquals(5.2 ,geometry.lines[0].points[0].longitude);
+			case MultiPolygon:
+				$type(geometry); // geojson.MultiPolygon
+				assertEquals(6.1 ,geometry.polygons[0].lines[0].points[0].latitude);
+				assertEquals(6.2 ,geometry.polygons[0].lines[0].points[0].longitude);
+		}
+	}
 	
 }
