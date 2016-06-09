@@ -2,7 +2,6 @@ package geojson;
 
 import geojson.util.*;
 
-@:forward(coordinates)
 abstract Point(GeoJsonPoint) from GeoJsonPoint to GeoJsonPoint {
 	
 	public var latitude(get, set):Float;

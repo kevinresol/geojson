@@ -2,7 +2,6 @@ package geojson;
 
 import geojson.util.*;
 
-@:forward
 abstract MultiPolygon(GeoJsonMultiPolygon) from GeoJsonMultiPolygon to GeoJsonMultiPolygon {
 	
 	public var polygons(get, set):Array<Lines>;

@@ -2,7 +2,6 @@ package geojson;
 
 import geojson.util.*;
 
-@:forward
 abstract MultiLineString(GeoJsonMultiLineString) from GeoJsonMultiLineString to GeoJsonMultiLineString {
 	
 	public var lines(get, set):Array<Line>;
