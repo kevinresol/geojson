@@ -1,15 +1,15 @@
 package geojson;
 
-import geojson.GeoJsonGeometry;
-import geojson.GeoJsonGeometryType;
+import geojson.Geometry;
+import geojson.GeometryType;
 import geojson.util.*;
 
-abstract GeometryCollection<T:GeoJsonGeometry.Typed<T>>(GeometryCollectionObject<T>) from GeometryCollectionObject<T> to GeometryCollectionObject<T> {
+abstract GeometryCollection<T:Geometry.Typed<T>>(GeometryCollectionObject<T>) from GeometryCollectionObject<T> to GeometryCollectionObject<T> {
 	
 	public var geometries(get, set):Array<T>;
 	public var type(get, never):String;
 	
-	public static function get<T:GeoJsonGeometry.Typed<T>>(geometry:T):GeoJsonGeometryKind
+	public static function get<T:Geometry.Typed<T>>(geometry:T):GeometryKind
 		return switch geometry.type {
 			case Point: Point(geometry);
 			case MultiPoint: MultiPoint(geometry);
@@ -31,13 +31,13 @@ abstract GeometryCollection<T:GeoJsonGeometry.Typed<T>>(GeometryCollectionObject
 	inline function get_type() return this.type;
 }
 
-private typedef GeometryCollectionObject<T:GeoJsonGeometry.Typed<T>> = {
+private typedef GeometryCollectionObject<T:Geometry.Typed<T>> = {
 	type:String,
 	geometries:Array<T>,
 }
 
 
-enum GeoJsonGeometryKind {
+enum GeometryKind {
 	Point(geometry:geojson.Point);
 	LineString(geometry:geojson.LineString);
 	Polygon(geometry:geojson.Polygon);

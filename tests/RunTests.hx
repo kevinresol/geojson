@@ -165,9 +165,9 @@ class RunTests extends TestCase{
 	
 	function testGeometryCollectionMixed() {
 		
-		// Use `GeoJsonGeometry` as the type parameter
+		// Use `Geometry` as the type parameter
 		// when using GeometryCollection for mixed types
-		var collection = new GeometryCollection<GeoJsonGeometry>([
+		var collection = new GeometryCollection<Geometry>([
 			new Point(1.1, 1.2),
 			new MultiPoint([c(2.1, 2.2),c(2.3, 2.4)]),
 			new LineString([c(3.1, 3.2),c(3.3, 3.4)]),
@@ -205,7 +205,7 @@ class RunTests extends TestCase{
 		
 	}
 	
-	inline function check<T:GeoJsonGeometry.Typed<T>>(geometry:T) {
+	inline function check<T:Geometry.Typed<T>>(geometry:T) {
 		// $type(geometry); // check.T, but it will be correctly typed inside the switch block
 		switch geometry.type {
 			case Point:

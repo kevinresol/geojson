@@ -1,6 +1,6 @@
 package geojson.util;
 
 typedef GeoJson<T, C> = {
-	type:GeoJsonGeometryType<T>,
+	type:GeometryType<T>,
 	coordinates:C,
 }
