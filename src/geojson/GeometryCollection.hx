@@ -4,9 +4,9 @@ import geojson.GeoJsonGeometry;
 import geojson.GeoJsonGeometryType;
 import geojson.util.*;
 
-abstract GeometryCollection(GeometryCollectionObject) from GeometryCollectionObject to GeometryCollectionObject {
+abstract GeometryCollection<T:GeoJsonGeometry.Typed<T>>(GeometryCollectionObject<T>) from GeometryCollectionObject<T> to GeometryCollectionObject<T> {
 	
-	public var geometries(get, set):Array<GeoJsonGeometry>;
+	public var geometries(get, set):Array<T>;
 	public var type(get, never):String;
 	
 	public static function get<T:GeoJsonGeometry.Typed<T>>(geometry:T):GeoJsonGeometryKind
@@ -19,7 +19,7 @@ abstract GeometryCollection(GeometryCollectionObject) from GeometryCollectionObj
 			case MultiPolygon: MultiPolygon(geometry);
 		}
 	
-	public inline function new(geometries:Array<GeoJsonGeometry>)
+	public inline function new(geometries:Array<T>)
 		this = {
 			type: 'GeometryCollection',
 			geometries: geometries,
@@ -31,9 +31,9 @@ abstract GeometryCollection(GeometryCollectionObject) from GeometryCollectionObj
 	inline function get_type() return this.type;
 }
 
-private typedef GeometryCollectionObject = {
+private typedef GeometryCollectionObject<T:GeoJsonGeometry.Typed<T>> = {
 	type:String,
-	geometries:Array<GeoJsonGeometry>,
+	geometries:Array<T>,
 }
 
 

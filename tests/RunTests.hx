@@ -146,10 +146,28 @@ class RunTests extends TestCase{
 		assertEquals(2.6, geo.polygons[2].lines[0].points[1].longitude);
 		assertEquals(1.7, geo.polygons[2].lines[0].points[1].latitude);
 	}
-	
+		
 	function testGeometryCollection() {
 		
 		var collection = new GeometryCollection([
+			new Point(11, 21),
+			new Point(12, 22),
+		]);
+		
+		var count = 0;
+		for(point in collection) {
+			// $type(point); // geojson.Point, the compiler knows it is a `Point` if you are not mixing different types
+			count++;
+			assertEquals(10. + count, point.latitude);
+			assertEquals(20. + count, point.longitude);
+		}
+	}
+	
+	function testGeometryCollectionMixed() {
+		
+		// Use `GeoJsonGeometry` as the type parameter
+		// when using GeometryCollection for mixed types
+		var collection = new GeometryCollection<GeoJsonGeometry>([
 			new Point(1.1, 1.2),
 			new MultiPoint([c(2.1, 2.2),c(2.3, 2.4)]),
 			new LineString([c(3.1, 3.2),c(3.3, 3.4)]),
