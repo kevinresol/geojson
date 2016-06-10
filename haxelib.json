@@ -9,7 +9,7 @@
   "contributors": [
     "kevinresol"
   ],
-  "releasenote": "Added GeometryCollection",
-  "version": "0.9.3",
+  "releasenote": "Expose Point's coordinates",
+  "version": "0.9.4",
   "dependencies": {}
 }
