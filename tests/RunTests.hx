@@ -4,25 +4,18 @@ import geojson.*;
 import geojson.util.*;
 import haxe.unit.*;
 
+#if flash
+import flash.system.System.exit;
+#else
+import Sys.exit;
+#end
+
 class RunTests extends TestCase{
 
 	static function main() {
 		var r = new TestRunner();
 		r.add(new RunTests());
-		
-		if(!r.run()) {
-			#if sys
-				Sys.exit(500);
-			#end
-			
-			#if flash
-				flash.system.System.exit(500);
-			#end
-		}
-		
-		#if flash
-			flash.system.System.exit(0);//Don't forget to exit on flash!
-		#end
+		exit(r.run() ? 0 : 500);
 	}
 	
 	inline function c(lat, long) return new Coordinates(lat, long);
