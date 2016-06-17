@@ -3,12 +3,7 @@ package ;
 import geojson.*;
 import geojson.util.*;
 import haxe.unit.*;
-
-#if flash
-import flash.system.System.exit;
-#else
-import Sys.exit;
-#end
+import travix.Logger.exit;
 
 class RunTests extends TestCase{
 
