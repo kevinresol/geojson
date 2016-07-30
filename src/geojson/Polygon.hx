@@ -21,11 +21,11 @@ abstract Polygon(Object) from Object to Object {
 		Construct a regular polygon
 		@param center center of the Polygon
 		@param sides number of sides of the polygon
-		@param radius normalized radius against the sphere's radius. For the Earth, use X(km) / 6378.1 (the Earth has radius of 6378.1km)
+		@param radius radius of the polygon, normalized against the sphere's radius. For the Earth, use X(km) / 6378.1 (the Earth has radius of 6378.1km)
 		@param bearing the starting bearing in degrees, default 0
 		
 		Example: 
-		The following code constructs a 10km hexagon on the Earth, somewhere centered in Asia
+		The following code constructs a hexagon of radius 10km centered somewhere in Asia
 		`regular([114.153775, 22.413735], 6, 10 / 6378.1)`
 	**/
 	public static function regular(center:Coordinates, sides:Int, radius:Float, bearingOffset:Float = 0) {
