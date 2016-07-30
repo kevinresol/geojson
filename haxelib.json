@@ -9,7 +9,7 @@
   "contributors": [
     "kevinresol"
   ],
-  "releasenote": "Expose Point's coordinates",
-  "version": "0.9.4",
+  "releasenote": "Add regular polygon helper",
+  "version": "0.9.5",
   "dependencies": {}
 }
