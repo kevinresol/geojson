@@ -14,6 +14,11 @@ abstract MultiPolygon(Object) from Object to Object {
 			coordinates: polygons,
 		}
 		
+	@:from
+	public static inline function fromPolygons(polygons:Array<Polygon>) {
+		return new MultiPolygon([for(polygon in polygons) polygon.lines]);
+	}
+		
 	inline function get_polygons() return this.coordinates;
 	inline function set_polygons(v) return this.coordinates = v;
 	inline function get_type() return this.type;

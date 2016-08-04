@@ -1,6 +1,6 @@
 package geojson.util;
 
-abstract Line(Array<Coordinates>) from Array<Coordinates> {
+abstract Line(Array<Coordinates>) from Array<Coordinates> to Array<Coordinates> {
 	
 	public var points(get, set):Array<Coordinates>;
 	

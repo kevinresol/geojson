@@ -1,6 +1,6 @@
 package geojson.util;
 
-abstract Lines(Array<Line>) from Array<Line> {
+abstract Lines(Array<Line>) from Array<Line> to Array<Line> {
 	
 	public var lines(get, set):Array<Line>;
 	
