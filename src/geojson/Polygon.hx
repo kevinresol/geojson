@@ -57,7 +57,7 @@ abstract Polygon(Object) from Object to Object {
 		@return true if this polygon contains the given point
 	**/
 	public function containsPoint(point:Coordinates) {
-		function _contains(p:Coordinates, line:Line) {
+		function _contains(point:Coordinates, line:Line) {
 			var n = line.length - 1;
 			var result = false;
 			var lat1 = line[0].latitude;
