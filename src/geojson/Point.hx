@@ -17,6 +17,11 @@ abstract Point(Object) from Object to Object {
 			coordinates: new Coordinates(latitude, longitude),
 		}
 		
+	@:to
+	public inline function toCoordinates():Coordinates return this.coordinates;
+	@:from
+	public static inline function fromCoordinates(v:Coordinates) return new Point(v.latitude, v.longitude);
+		
 	inline function get_latitude() return this.coordinates[1];
 	inline function get_longitude() return this.coordinates[0];
 	inline function set_latitude(v) return this.coordinates[1] = v;

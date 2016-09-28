@@ -23,6 +23,12 @@ abstract LineString(Object) from Object to Object {
 			type: LineString,
 			coordinates: line,
 		}
+		
+	
+	@:to 
+	public inline function toLine():Line return this.coordinates;
+	@:from 
+	public static inline function fromLine(v:Line) return new LineString(v);
 
 	function get_length() {
 		function dist(c1:Coordinates, c2:Coordinates) {
