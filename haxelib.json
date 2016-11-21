@@ -1,6 +1,7 @@
 {
   "name": "geojson",
   "license": "MIT",
+  "url": "https://github.com/kevinresol/geojson",
   "tags": [
     "cross",
     "geojson"
@@ -9,7 +10,7 @@
   "contributors": [
     "kevinresol"
   ],
-  "releasenote": "Add regular polygon helper",
-  "version": "0.9.5",
+  "releasenote": "Add url",
+  "version": "0.9.6",
   "dependencies": {}
 }
