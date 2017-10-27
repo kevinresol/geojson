@@ -2,8 +2,7 @@ package geojson;
 
 import geojson.util.*;
 
-private typedef Object = GeoJson<MultiLineString, Array<Line>>;
-abstract MultiLineString(Object) from Object to Object {
+abstract MultiLineString(GeoJson<MultiLineString, Array<Line>>) from GeoJson<MultiLineString, Array<Line>> to GeoJson<MultiLineString, Array<Line>> {
 	
 	public var lines(get, set):Array<Line>;
 	public var type(get, never):GeometryType<MultiLineString>;

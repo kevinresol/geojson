@@ -2,8 +2,7 @@ package geojson;
 
 import geojson.util.*;
 
-private typedef Object = GeoJson<MultiPolygon, Array<Lines>>;
-abstract MultiPolygon(Object) from Object to Object {
+abstract MultiPolygon(GeoJson<MultiPolygon, Array<Lines>>) from GeoJson<MultiPolygon, Array<Lines>> to GeoJson<MultiPolygon, Array<Lines>> {
 	
 	public var polygons(get, set):Array<Lines>;
 	public var type(get, never):GeometryType<MultiPolygon>;

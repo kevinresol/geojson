@@ -2,8 +2,7 @@ package geojson;
 
 import geojson.util.*;
 
-private typedef Object = GeoJson<LineString, Array<Coordinates>>;
-abstract LineString(Object) from Object to Object {
+abstract LineString(GeoJson<LineString, Array<Coordinates>>) from GeoJson<LineString, Array<Coordinates>> to GeoJson<LineString, Array<Coordinates>> {
 	
 	static inline var TO_RADIANS = 3.14159265359 / 180;
 	static inline var TO_DEGREES = 180 / 3.14159265359;

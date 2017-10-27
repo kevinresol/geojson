@@ -2,10 +2,8 @@ package geojson;
 
 import geojson.util.*;
 
-private typedef Object = GeoJson<Point, Coordinates>;
-
 @:forward(coordinates)
-abstract Point(Object) from Object to Object {
+abstract Point(GeoJson<Point, Coordinates>) from GeoJson<Point, Coordinates> to GeoJson<Point, Coordinates> {
 	
 	public var latitude(get, set):Float;
 	public var longitude(get, set):Float;

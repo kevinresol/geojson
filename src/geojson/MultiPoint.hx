@@ -2,8 +2,7 @@ package geojson;
 
 import geojson.util.*;
 
-private typedef Object = GeoJson<MultiPoint, Array<Coordinates>>;
-abstract MultiPoint(Object) from Object to Object {
+abstract MultiPoint(GeoJson<MultiPoint, Array<Coordinates>>) from GeoJson<MultiPoint, Array<Coordinates>> to GeoJson<MultiPoint, Array<Coordinates>> {
 	
 	public var points(get, set):Array<Coordinates>;
 	public var type(get, never):GeometryType<MultiPoint>;
