@@ -16,7 +16,7 @@ class RunTests extends TestCase{
 		var r = new TestRunner();
 		r.add(new RunTests());
 		#if tink_json r.add(new TinkJson()); #end
-		exit(r.run() ? 0 : 500);
+		travix.Logger.exit(r.run() ? 0 : 500);
 	}
 	
 	inline function c(lat, long) return new Coordinates(lat, long);
