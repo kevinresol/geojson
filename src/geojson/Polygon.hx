@@ -2,7 +2,7 @@ package geojson;
 
 import geojson.util.*;
 
-abstract Polygon(GeoJson<Polygon, Array<Line>>) from GeoJson<Polygon, Array<Line>> to GeoJson<Polygon, Array<Line>> {
+abstract Polygon(GeoJson<Polygon, Array<Line>>) to GeoJson<Polygon, Array<Line>> {
 	
 	static inline var TO_RADIANS = 3.14159265359 / 180;
 	static inline var TO_DEGREES = 180 / 3.14159265359;
@@ -93,4 +93,20 @@ abstract Polygon(GeoJson<Polygon, Array<Line>>) from GeoJson<Polygon, Array<Line
 	inline function set_lines(v) return this.coordinates = v;
 	inline function get_type() return this.type;
 	@:to inline function toGeoJson():Geometry return cast this;
+	
+	#if tink_json
+	@:to
+	public function toRepresentation():tink.json.Representation<{type:String, coordinates:Array<Line>}> {
+		return new tink.json.Representation(cast this);
+	}
+	
+	@:from
+	public static function fromRepresentation(rep:tink.json.Representation<{type:String, coordinates:Array<Line>}>):Polygon {
+		switch rep.get() {
+			case v if(v.type == 'Polygon'): return cast v;
+			default: throw 'Invalid Polygon';
+		}
+	}
+	#end
+	
 }

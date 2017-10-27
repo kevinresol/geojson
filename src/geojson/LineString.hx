@@ -2,7 +2,7 @@ package geojson;
 
 import geojson.util.*;
 
-abstract LineString(GeoJson<LineString, Array<Coordinates>>) from GeoJson<LineString, Array<Coordinates>> to GeoJson<LineString, Array<Coordinates>> {
+abstract LineString(GeoJson<LineString, Array<Coordinates>>) to GeoJson<LineString, Array<Coordinates>> {
 	
 	static inline var TO_RADIANS = 3.14159265359 / 180;
 	static inline var TO_DEGREES = 180 / 3.14159265359;
@@ -51,4 +51,19 @@ abstract LineString(GeoJson<LineString, Array<Coordinates>>) from GeoJson<LineSt
 	inline function set_points(v) return this.coordinates = v;
 	inline function get_type() return this.type;
 	@:to inline function toGeoJson():Geometry return cast this;
+	
+	#if tink_json
+	@:to
+	public function toRepresentation():tink.json.Representation<{type:String, coordinates:Line}> {
+		return new tink.json.Representation(cast this);
+	}
+	
+	@:from
+	public static function fromRepresentation(rep:tink.json.Representation<{type:String, coordinates:Line}>):LineString {
+		switch rep.get() {
+			case v if(v.type == 'LineString'): return cast v;
+			default: throw 'Invalid LineString';
+		}
+	}
+	#end
 }

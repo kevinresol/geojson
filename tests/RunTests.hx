@@ -15,6 +15,7 @@ class RunTests extends TestCase{
 	static function main() {
 		var r = new TestRunner();
 		r.add(new RunTests());
+		r.add(new TinkJson());
 		exit(r.run() ? 0 : 500);
 	}
 	

@@ -3,7 +3,7 @@ package geojson;
 import geojson.util.*;
 
 @:forward(coordinates)
-abstract Point(GeoJson<Point, Coordinates>) from GeoJson<Point, Coordinates> to GeoJson<Point, Coordinates> {
+abstract Point(GeoJson<Point, Coordinates>) to GeoJson<Point, Coordinates> {
 	
 	public var latitude(get, set):Float;
 	public var longitude(get, set):Float;
@@ -26,4 +26,19 @@ abstract Point(GeoJson<Point, Coordinates>) from GeoJson<Point, Coordinates> to 
 	inline function set_longitude(v) return this.coordinates[0] = v;
 	inline function get_type() return this.type;
 	@:to inline function toGeoJson():Geometry return cast this;
+	
+	#if tink_json
+	@:to
+	public function toRepresentation():tink.json.Representation<{type:String, coordinates:Coordinates}> {
+		return new tink.json.Representation(cast this);
+	}
+	
+	@:from
+	public static function fromRepresentation(rep:tink.json.Representation<{type:String, coordinates:Coordinates}>):Point {
+		switch rep.get() {
+			case v if(v.type == 'Point'): return cast v;
+			default: throw 'Invalid Point';
+		}
+	}
+	#end
 }
