@@ -142,7 +142,10 @@ class RunTests extends TestCase{
 	}
 	
 	function testMultiPolygon() {
-		var geo = new MultiPolygon([[[c(1.2, 2.1),c(1.3, 2.2)]], [[c(1.4, 2.3),c(1.5, 2.4)]]]);
+		var geo = new MultiPolygon([
+			[[c(1.2, 2.1),c(1.3, 2.2)]], [[c(1.4, 2.3),c(1.5, 2.4)]],
+			new Lines([new Line([c(1.6, 2.5),c(1.7, 2.6)])])
+		]);
 		assertEquals('MultiPolygon', geo.type);
 		assertEquals(2.1, geo.polygons[0].lines[0].points[0].longitude);
 		assertEquals(1.2, geo.polygons[0].lines[0].points[0].latitude);
@@ -153,7 +156,6 @@ class RunTests extends TestCase{
 		assertEquals(2.4, geo.polygons[1].lines[0].points[1].longitude);
 		assertEquals(1.5, geo.polygons[1].lines[0].points[1].latitude);
 		
-		geo.polygons.push(new Lines([new Line([c(1.6, 2.5),c(1.7, 2.6)])]));
 		assertEquals(2.5, geo.polygons[2].lines[0].points[0].longitude);
 		assertEquals(1.6, geo.polygons[2].lines[0].points[0].latitude);
 		assertEquals(2.6, geo.polygons[2].lines[0].points[1].longitude);
