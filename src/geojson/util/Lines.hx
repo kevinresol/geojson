@@ -1,6 +1,6 @@
 package geojson.util;
 
-@:forward(iterator, length)
+@:forward(iterator, length, slice)
 abstract Lines(Array<Line>) from Array<Line> to Array<Line> from Array<Array<Coordinates>> {
 	
 	public var lines(get, set):Array<Line>;
