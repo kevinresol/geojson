@@ -1,11 +1,9 @@
 package geojson;
 
 import geojson.util.*;
+import geojson.util.Constants.*;
 
 abstract Polygon(GeoJson<Polygon, Array<Line>>) to GeoJson<Polygon, Array<Line>> {
-	
-	static inline var TO_RADIANS = 3.14159265359 / 180;
-	static inline var TO_DEGREES = 180 / 3.14159265359;
 	
 	public var lines(get, set):Array<Line>;
 	public var type(get, never):GeometryType<Polygon>;
