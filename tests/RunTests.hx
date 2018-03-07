@@ -65,7 +65,7 @@ class RunTests extends TestCase{
 		assertEquals(1.2, geo.points[0].latitude);
 		assertEquals(2.2, geo.points[1].longitude);
 		assertEquals(1.3, geo.points[1].latitude);
-		assertEquals(0.002467974469060938, geo.length);
+		assertTrue(Math.abs(0.0024679744690609 - geo.length) < 0.0000000000000001);
 		
 		geo.points.push(new Coordinates(1.4, 2.3));
 		assertEquals(2.3, geo.points[2].longitude);

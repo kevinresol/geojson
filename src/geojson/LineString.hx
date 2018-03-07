@@ -30,20 +30,9 @@ abstract LineString(GeoJson<LineString, Array<Coordinates>>) to GeoJson<LineStri
 	public static inline function fromLine(v:Line) return new LineString(v);
 
 	function get_length() {
-		function dist(c1:Coordinates, c2:Coordinates) {
-			var lat1 = c1.latitude * TO_RADIANS;
-			var lat2 = c2.latitude * TO_RADIANS;
-			var dlat = lat2 - lat1;
-			var dlong = (c2.longitude - c1.longitude) * TO_RADIANS;
-			var a = Math.sin(dlat / 2) * Math.sin(dlat / 2) +
-					Math.cos(lat1) * Math.cos(lat2) *
-					Math.sin(dlong / 2) * Math.sin(dlong / 2);
-			return 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-		}
-
 		var total = 0.;
 		for(i in 0...points.length - 1)
-			total += dist(points[i], points[i+1]);
+			total += points[i].distanceTo(points[i+1], 1);
 		return total;
 	}
 		
