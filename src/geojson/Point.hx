@@ -28,28 +28,11 @@ abstract Point(GeoJson<Point, Coordinates>) to GeoJson<Point, Coordinates> {
 	inline function get_type() return this.type;
 	@:to inline function toGeoJson():Geometry return cast this;
 	
-	// https://www.movable-type.co.uk/scripts/latlong.html
-	public function distanceTo(that:Point, radius:Float) {
-		var lat1 = latitude * TO_RADIANS;
-		var lat2 = that.latitude * TO_RADIANS;
-		var long1 = longitude * TO_RADIANS;
-		var long2 = that.longitude * TO_RADIANS;
-		var sdlat = Math.sin((lat1 - lat2) / 2);
-		var sdlong = Math.sin((long1 - long2) / 2);
-		var a = sdlat * sdlat + Math.cos(lat1) * Math.cos(lat2) * sdlong * sdlong;
-		return 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)) * radius;
-	}
+	public inline function distanceTo(that:Point, radius:Float)
+		return this.coordinates.distanceTo(that.coordinates, radius);
 	
-	// https://www.movable-type.co.uk/scripts/latlong.html
-	public function initialBearingTo(that:Point) {
-		var lat1 = latitude * TO_RADIANS;
-		var lat2 = that.latitude * TO_RADIANS;
-		var long1 = longitude * TO_RADIANS;
-		var long2 = that.longitude * TO_RADIANS;
-		var y = Math.sin(long2 - long1) * Math.cos(lat2);
-		var x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(long2 - long1);
-		return Math.atan2(y, x) * TO_DEGREES;
-	}
+	public function initialBearingTo(that:Point)
+		return this.coordinates.initialBearingTo(that.coordinates);
 	
 	#if tink_json
 	@:to

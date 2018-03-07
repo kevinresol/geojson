@@ -1,5 +1,7 @@
 package geojson.util;
 
+import geojson.util.Constants.*;
+
 abstract Coordinates(Array<Float>) to Array<Float> {
 	
 	public var latitude(get, set):Float;
@@ -12,6 +14,30 @@ abstract Coordinates(Array<Float>) to Array<Float> {
 	inline function get_longitude() return this[0];
 	inline function set_latitude(v) return this[1] = v;
 	inline function set_longitude(v) return this[0] = v;
+	
+	
+	// https://www.movable-type.co.uk/scripts/latlong.html
+	public function distanceTo(that:Coordinates, radius:Float) {
+		var lat1 = latitude * TO_RADIANS;
+		var lat2 = that.latitude * TO_RADIANS;
+		var long1 = longitude * TO_RADIANS;
+		var long2 = that.longitude * TO_RADIANS;
+		var sdlat = Math.sin((lat1 - lat2) / 2);
+		var sdlong = Math.sin((long1 - long2) / 2);
+		var a = sdlat * sdlat + Math.cos(lat1) * Math.cos(lat2) * sdlong * sdlong;
+		return 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)) * radius;
+	}
+	
+	// https://www.movable-type.co.uk/scripts/latlong.html
+	public function initialBearingTo(that:Coordinates) {
+		var lat1 = latitude * TO_RADIANS;
+		var lat2 = that.latitude * TO_RADIANS;
+		var long1 = longitude * TO_RADIANS;
+		var long2 = that.longitude * TO_RADIANS;
+		var y = Math.sin(long2 - long1) * Math.cos(lat2);
+		var x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(long2 - long1);
+		return Math.atan2(y, x) * TO_DEGREES;
+	}
 	
 	#if tink_json
 	@:to
