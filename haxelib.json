@@ -1,16 +1,16 @@
 {
-  "name": "geojson",
-  "license": "MIT",
-  "url": "https://github.com/kevinresol/geojson",
-  "tags": [
-    "cross",
-    "geojson"
-  ],
-  "classPath": "src",
-  "contributors": [
-    "kevinresol"
-  ],
-  "releasenote": "Add url",
-  "version": "0.9.6",
-  "dependencies": {}
+	"name": "geojson",
+	"license": "MIT",
+	"tags": [
+		"cross",
+		"geojson"
+	],
+	"classPath": "src",
+	"contributors": [
+		"kevinresol"
+	],
+	"releasenote": "Various additions and fixes",
+	"version": "0.9.7",
+	"url": "https://github.com/kevinresol/geojson",
+	"dependencies": {}
 }
