@@ -21,7 +21,7 @@ abstract Point(GeoJson<Point, Coordinates>) to GeoJson<Point, Coordinates> {
 	
 	static inline function createFromCoordinates(v:Coordinates):Point
 		return cast {
-			type: Point,
+			type: (Point:GeometryType<Point>),
 			coordinates: v,
 		}
 	
