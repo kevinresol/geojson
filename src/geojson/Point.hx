@@ -11,15 +11,20 @@ abstract Point(GeoJson<Point, Coordinates>) to GeoJson<Point, Coordinates> {
 	public var type(get, never):GeometryType<Point>;
 	
 	public inline function new(latitude:Float, longitude:Float)
-		this = {
-			type: Point,
-			coordinates: new Coordinates(latitude, longitude),
-		}
+		this = createFromCoordinates(new Coordinates(latitude, longitude));
 		
 	@:to
 	public inline function toCoordinates():Coordinates return this.coordinates;
 	@:from
-	public static inline function fromCoordinates(v:Coordinates) return new Point(v.latitude, v.longitude);
+	public static inline function fromCoordinates(v:Coordinates):Point return createFromCoordinates(v);
+	
+	
+	static inline function createFromCoordinates(v:Coordinates):Point
+		return cast {
+			type: Point,
+			coordinates: v,
+		}
+	
 		
 	inline function get_latitude() return this.coordinates[1];
 	inline function get_longitude() return this.coordinates[0];
@@ -33,6 +38,9 @@ abstract Point(GeoJson<Point, Coordinates>) to GeoJson<Point, Coordinates> {
 	
 	public function initialBearingTo(that:Point)
 		return this.coordinates.initialBearingTo(that.coordinates);
+	
+	public static function interpolate(points:Array<{point:Point, weight:Float}>):Point
+		return Coordinates.interpolate([for(point in points) {coordinates: point.point.coordinates, weight: point.weight}]);
 	
 	#if tink_json
 	@:to

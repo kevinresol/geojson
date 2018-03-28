@@ -39,6 +39,19 @@ abstract Coordinates(Array<Float>) to Array<Float> {
 		return Math.atan2(y, x) * TO_DEGREES;
 	}
 	
+	public static function interpolate(points:Array<{coordinates:Coordinates, weight:Float}>):Coordinates {
+		// TODO: improve this native implementation
+		var lat = 0.;
+		var long = 0.;
+		var sum = 0.;
+		for(point in points) {
+			lat += point.coordinates.latitude * point.weight;
+			long += point.coordinates.longitude * point.weight;
+			sum += point.weight;
+		}
+		return new Coordinates(lat / sum, long / sum);
+	}
+	
 	#if tink_json
 	@:to
 	public inline function toRepresentation():tink.json.Representation<Array<Float>> {
