@@ -3,7 +3,7 @@ package geojson.util;
 @:forward(iterator, length, slice)
 abstract Liness(Array<Lines>) from Array<Lines> to Array<Lines> from Array<Array<Line>> {
 	@:from
-	public static function fromCoordinates(v:Array<Array<Array<Coordinates>>>):Liness
+	public static inline function fromCoordinates(v:Array<Array<Array<Coordinates>>>):Liness
 		return cast v;
 	
 	public var lines(get, set):Array<Lines>;
