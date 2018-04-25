@@ -1,6 +1,6 @@
 package geojson.util;
 
-@:forward(iterator, length, slice)
+@:forward(iterator, length, slice, concat)
 abstract Liness(Array<Lines>) from Array<Lines> to Array<Lines> from Array<Array<Line>> {
 	@:from
 	public static inline function fromCoordinates(v:Array<Array<Array<Coordinates>>>):Liness

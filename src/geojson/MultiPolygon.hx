@@ -23,6 +23,10 @@ abstract MultiPolygon(GeoJson<MultiPolygon, Liness>) to GeoJson<MultiPolygon, Li
 	inline function get_type() return this.type;
 	@:to inline function toGeoJson():Geometry return cast this;
 	
+	public function concat(others:Array<Polygon>) {
+		return new MultiPolygon(polygons.concat([for(polygon in others) polygon.lines]));
+	}
+	
 	#if tink_json
 	@:to
 	public function toRepresentation():tink.json.Representation<{type:String, coordinates:Liness}> {
