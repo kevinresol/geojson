@@ -18,6 +18,11 @@ abstract MultiPolygon(GeoJson<MultiPolygon, Liness>) to GeoJson<MultiPolygon, Li
 		return new MultiPolygon([for(polygon in polygons) polygon.lines]);
 	}
 		
+	@:to
+	public inline function toPolygons():Array<Polygon> {
+		return [for(lines in polygons) new Polygon(lines)];
+	}
+		
 	inline function get_polygons() return this.coordinates;
 	inline function set_polygons(v) return this.coordinates = v;
 	inline function get_type() return this.type;
