@@ -19,7 +19,7 @@ abstract MultiPolygon(GeoJson<MultiPolygon, Liness>) to GeoJson<MultiPolygon, Li
 	}
 		
 	@:to
-	public inline function toPolygons():Array<Polygon> {
+	public function toPolygons():Array<Polygon> {
 		return [for(lines in polygons) new Polygon(lines)];
 	}
 		
@@ -30,6 +30,11 @@ abstract MultiPolygon(GeoJson<MultiPolygon, Liness>) to GeoJson<MultiPolygon, Li
 	
 	public function concat(others:Array<Polygon>) {
 		return new MultiPolygon(polygons.concat([for(polygon in others) polygon.lines]));
+	}
+	
+	public function containsPoint(point:Coordinates) {
+		for(polygon in toPolygons()) if(polygon.containsPoint(point)) return true;
+		return false;
 	}
 	
 	#if tink_json
