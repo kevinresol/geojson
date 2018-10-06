@@ -52,6 +52,10 @@ abstract Coordinates(Array<Float>) to Array<Float> {
 		return new Coordinates(lat / sum, long / sum);
 	}
 	
+	public static function average(coordinates:Array<Coordinates>):Coordinates {
+		return interpolate([for(c in coordinates) {coordinates: c, weight: 1}]);
+	}
+	
 	#if tink_json
 	@:to
 	public inline function toRepresentation():tink.json.Representation<Array<Float>> {

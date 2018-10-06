@@ -42,6 +42,9 @@ abstract Point(GeoJson<Point, Coordinates>) to GeoJson<Point, Coordinates> {
 	public static function interpolate(points:Array<{point:Point, weight:Float}>):Point
 		return Coordinates.interpolate([for(point in points) {coordinates: point.point.coordinates, weight: point.weight}]);
 	
+	public static function average(points:Array<Point>):Point
+		return Coordinates.interpolate([for(point in points) {coordinates: point.coordinates, weight: 1}]);
+	
 	#if tink_json
 	@:to
 	public function toRepresentation():tink.json.Representation<{type:String, coordinates:Coordinates}> {
