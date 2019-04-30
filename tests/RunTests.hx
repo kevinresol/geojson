@@ -2,7 +2,8 @@ package ;
 
 import geojson.*;
 import geojson.util.*;
-import haxe.unit.*;
+import tink.unit.*;
+import tink.testrunner.*;
 
 #if flash
 import flash.system.System.exit;
@@ -10,101 +11,110 @@ import flash.system.System.exit;
 import Sys.exit;
 #end
 
-class RunTests extends TestCase{
+@:asserts
+class RunTests {
 
 	static function main() {
-		var r = new TestRunner();
-		r.add(new RunTests());
-		#if tink_json r.add(new TinkJson()); #end
-		travix.Logger.exit(r.run() ? 0 : 500);
+		Runner.run(TestBatch.make([
+			new RunTests(),
+			#if tink_json new TinkJson(), #end
+		])).handle(Runner.exit);
 	}
+	
+	public function new() {}
 	
 	inline function c(lat, long) return new Coordinates(lat, long);
 	
-	function testCoordinates() {
+	public function coordinates() {
 		var c = new Coordinates(1.1, 2.2);
 		var f:Array<Float> = c;
-		assertEquals(1.1, f[1]);
-		assertEquals(2.2, f[0]);
+		asserts.assert(f[1] == 1.1);
+		asserts.assert(f[0] == 2.2);
+		return asserts.done();
 	}
 	
-	function testPoint() {
+	public function point() {
 		var geo = new Point(1.2, 2.1);
-		assertEquals('Point', geo.type);
-		assertEquals(2.1, geo.longitude);
-		assertEquals(1.2, geo.latitude);
+		asserts.assert(geo.type == 'Point');
+		asserts.assert(geo.longitude == 2.1);
+		asserts.assert(geo.latitude == 1.2);
 		
 		geo.latitude = 3.1;
 		geo.longitude = 4.2;
-		assertEquals(3.1, geo.latitude);
-		assertEquals(4.2, geo.longitude);
+		asserts.assert(geo.latitude == 3.1);
+		asserts.assert(geo.longitude == 4.2);
 		
 		geo.latitude += 1;
 		geo.longitude -= 1;
-		assertEquals(4.1, geo.latitude);
-		assertEquals(3.2, geo.longitude);
+		asserts.assert(geo.latitude == 4.1);
+		asserts.assert(geo.longitude == 3.2);
+		return asserts.done();
 	}
 	
-	function testMultiPoint() {
+	public function multiPoint() {
 		var geo = new MultiPoint([c(1.2, 2.1),c(1.3, 2.2)]);
-		assertEquals('MultiPoint', geo.type);
-		assertEquals(2.1, geo.points[0].longitude);
-		assertEquals(1.2, geo.points[0].latitude);
-		assertEquals(2.2, geo.points[1].longitude);
-		assertEquals(1.3, geo.points[1].latitude);
+		asserts.assert(geo.type == 'MultiPoint');
+		asserts.assert(geo.points[0].longitude == 2.1);
+		asserts.assert(geo.points[0].latitude == 1.2);
+		asserts.assert(geo.points[1].longitude == 2.2);
+		asserts.assert(geo.points[1].latitude == 1.3);
 		
 		geo.points.push(new Coordinates(1.4, 2.3));
-		assertEquals(2.3, geo.points[2].longitude);
-		assertEquals(1.4, geo.points[2].latitude);
+		asserts.assert(geo.points[2].longitude == 2.3);
+		asserts.assert(geo.points[2].latitude == 1.4);
+		return asserts.done();
 	}
 	
-	function testLineString() {
+	public function lineString() {
 		var geo = new LineString([c(1.2, 2.1),c(1.3, 2.2)]);
-		assertEquals('LineString', geo.type);
-		assertEquals(2.1, geo.points[0].longitude);
-		assertEquals(1.2, geo.points[0].latitude);
-		assertEquals(2.2, geo.points[1].longitude);
-		assertEquals(1.3, geo.points[1].latitude);
-		assertTrue(Math.abs(0.0024679744690609 - geo.length) < 0.0000000000000001);
+		asserts.assert(geo.type == 'LineString');
+		asserts.assert(geo.points[0].longitude == 2.1);
+		asserts.assert(geo.points[0].latitude == 1.2);
+		asserts.assert(geo.points[1].longitude == 2.2);
+		asserts.assert(geo.points[1].latitude == 1.3);
+		asserts.assert(Math.abs(0.0024679744690609 - geo.length) < 0.0000000000000001);
 		
 		geo.points.push(new Coordinates(1.4, 2.3));
-		assertEquals(2.3, geo.points[2].longitude);
-		assertEquals(1.4, geo.points[2].latitude);
+		asserts.assert(geo.points[2].longitude == 2.3);
+		asserts.assert(geo.points[2].latitude == 1.4);
+		return asserts.done();
 	}
 	
-	function testMultiLineString() {
+	public function multiLineString() {
 		var geo = new MultiLineString([[c(1.2, 2.1),c(1.3, 2.2)], [c(1.4, 2.3),c(1.5, 2.4)]]);
-		assertEquals('MultiLineString', geo.type);
-		assertEquals(2.1, geo.lines[0].points[0].longitude);
-		assertEquals(1.2, geo.lines[0].points[0].latitude);
-		assertEquals(2.2, geo.lines[0].points[1].longitude);
-		assertEquals(1.3, geo.lines[0].points[1].latitude);
-		assertEquals(2.3, geo.lines[1].points[0].longitude);
-		assertEquals(1.4, geo.lines[1].points[0].latitude);
-		assertEquals(2.4, geo.lines[1].points[1].longitude);
-		assertEquals(1.5, geo.lines[1].points[1].latitude);
+		asserts.assert(geo.type == 'MultiLineString');
+		asserts.assert(geo.lines[0].points[0].longitude == 2.1);
+		asserts.assert(geo.lines[0].points[0].latitude == 1.2);
+		asserts.assert(geo.lines[0].points[1].longitude == 2.2);
+		asserts.assert(geo.lines[0].points[1].latitude == 1.3);
+		asserts.assert(geo.lines[1].points[0].longitude == 2.3);
+		asserts.assert(geo.lines[1].points[0].latitude == 1.4);
+		asserts.assert(geo.lines[1].points[1].longitude == 2.4);
+		asserts.assert(geo.lines[1].points[1].latitude == 1.5);
 		
 		geo.lines.push(new Line([c(1.6, 2.5),c(1.7, 2.6)]));
-		assertEquals(2.5, geo.lines[2].points[0].longitude);
-		assertEquals(1.6, geo.lines[2].points[0].latitude);
-		assertEquals(2.6, geo.lines[2].points[1].longitude);
-		assertEquals(1.7, geo.lines[2].points[1].latitude);
+		asserts.assert(geo.lines[2].points[0].longitude == 2.5);
+		asserts.assert(geo.lines[2].points[0].latitude == 1.6);
+		asserts.assert(geo.lines[2].points[1].longitude == 2.6);
+		asserts.assert(geo.lines[2].points[1].latitude == 1.7);
+		return asserts.done();
 	}
 	
-	function testPolygon() {
+	public function polygon() {
 		var geo = new Polygon([[c(1.2, 2.1),c(1.3, 2.2)]]);
-		assertEquals('Polygon', geo.type);
-		assertEquals(2.1, geo.lines[0].points[0].longitude);
-		assertEquals(1.2, geo.lines[0].points[0].latitude);
-		assertEquals(2.2, geo.lines[0].points[1].longitude);
-		assertEquals(1.3, geo.lines[0].points[1].latitude);
+		asserts.assert(geo.type == 'Polygon');
+		asserts.assert(geo.lines[0].points[0].longitude == 2.1);
+		asserts.assert(geo.lines[0].points[0].latitude == 1.2);
+		asserts.assert(geo.lines[0].points[1].longitude == 2.2);
+		asserts.assert(geo.lines[0].points[1].latitude == 1.3);
 		
 		geo.lines[0].points.push(new Coordinates(1.4, 2.3));
-		assertEquals(2.3, geo.lines[0].points[2].longitude);
-		assertEquals(1.4, geo.lines[0].points[2].latitude);
+		asserts.assert(geo.lines[0].points[2].longitude == 2.3);
+		asserts.assert(geo.lines[0].points[2].latitude == 1.4);
+		return asserts.done();
 	}
 	
-	function testPointInPolygon() {
+	public function pointInPolygon() {
 		var geo = new Polygon([[
 	  	c(22.411663305112153,114.21318054199219),
 	  	c(22.4124567804752,114.20841693878174),
@@ -118,51 +128,54 @@ class RunTests extends TestCase{
 	  	c(22.39039647758608,114.2274284362793),
 	  	c(22.401347713040746,114.225196838378),
 		]]);
-		assertTrue(geo.containsPoint(c(22.388123, 114.202033)));
-		assertFalse(geo.containsPoint(c(22.456397, 114.191304)));
+		asserts.assert(geo.containsPoint(c(22.388123, 114.202033)));
+		asserts.assert(!geo.containsPoint(c(22.456397, 114.191304)));
+		return asserts.done();
 	}
 	
-	function testMultiRingPolygon() {
+	public function multiRingPolygon() {
 		var geo = new Polygon([[c(1.2, 2.1),c(1.3, 2.2)], [c(1.4, 2.3),c(1.5, 2.4)]]);
-		assertEquals('Polygon', geo.type);
-		assertEquals(2.1, geo.lines[0].points[0].longitude);
-		assertEquals(1.2, geo.lines[0].points[0].latitude);
-		assertEquals(2.2, geo.lines[0].points[1].longitude);
-		assertEquals(1.3, geo.lines[0].points[1].latitude);
-		assertEquals(2.3, geo.lines[1].points[0].longitude);
-		assertEquals(1.4, geo.lines[1].points[0].latitude);
-		assertEquals(2.4, geo.lines[1].points[1].longitude);
-		assertEquals(1.5, geo.lines[1].points[1].latitude);
+		asserts.assert(geo.type == 'Polygon');
+		asserts.assert(geo.lines[0].points[0].longitude == 2.1);
+		asserts.assert(geo.lines[0].points[0].latitude == 1.2);
+		asserts.assert(geo.lines[0].points[1].longitude == 2.2);
+		asserts.assert(geo.lines[0].points[1].latitude == 1.3);
+		asserts.assert(geo.lines[1].points[0].longitude == 2.3);
+		asserts.assert(geo.lines[1].points[0].latitude == 1.4);
+		asserts.assert(geo.lines[1].points[1].longitude == 2.4);
+		asserts.assert(geo.lines[1].points[1].latitude == 1.5);
 		
 		geo.lines.push(new Line([c(1.6, 2.5),c(1.7, 2.6)]));
-		assertEquals(2.5, geo.lines[2].points[0].longitude);
-		assertEquals(1.6, geo.lines[2].points[0].latitude);
-		assertEquals(2.6, geo.lines[2].points[1].longitude);
-		assertEquals(1.7, geo.lines[2].points[1].latitude);
+		asserts.assert(geo.lines[2].points[0].longitude == 2.5);
+		asserts.assert(geo.lines[2].points[0].latitude == 1.6);
+		asserts.assert(geo.lines[2].points[1].longitude == 2.6);
+		asserts.assert(geo.lines[2].points[1].latitude == 1.7);
+		return asserts.done();
 	}
 	
-	function testMultiPolygon() {
+	public function multiPolygon() {
 		var geo = new MultiPolygon([
 			[[c(1.2, 2.1),c(1.3, 2.2)]], [[c(1.4, 2.3),c(1.5, 2.4)]],
 			new Lines([new Line([c(1.6, 2.5),c(1.7, 2.6)])])
 		]);
-		assertEquals('MultiPolygon', geo.type);
-		assertEquals(2.1, geo.polygons[0].lines[0].points[0].longitude);
-		assertEquals(1.2, geo.polygons[0].lines[0].points[0].latitude);
-		assertEquals(2.2, geo.polygons[0].lines[0].points[1].longitude);
-		assertEquals(1.3, geo.polygons[0].lines[0].points[1].latitude);
-		assertEquals(2.3, geo.polygons[1].lines[0].points[0].longitude);
-		assertEquals(1.4, geo.polygons[1].lines[0].points[0].latitude);
-		assertEquals(2.4, geo.polygons[1].lines[0].points[1].longitude);
-		assertEquals(1.5, geo.polygons[1].lines[0].points[1].latitude);
+		asserts.assert(geo.type == 'MultiPolygon');
+		asserts.assert(geo.polygons[0].lines[0].points[0].longitude == 2.1);
+		asserts.assert(geo.polygons[0].lines[0].points[0].latitude == 1.2);
+		asserts.assert(geo.polygons[0].lines[0].points[1].longitude == 2.2);
+		asserts.assert(geo.polygons[0].lines[0].points[1].latitude == 1.3);
+		asserts.assert(geo.polygons[1].lines[0].points[0].longitude == 2.3);
+		asserts.assert(geo.polygons[1].lines[0].points[0].latitude == 1.4);
+		asserts.assert(geo.polygons[1].lines[0].points[1].longitude == 2.4);
+		asserts.assert(geo.polygons[1].lines[0].points[1].latitude == 1.5);
 		
-		assertEquals(2.5, geo.polygons[2].lines[0].points[0].longitude);
-		assertEquals(1.6, geo.polygons[2].lines[0].points[0].latitude);
-		assertEquals(2.6, geo.polygons[2].lines[0].points[1].longitude);
-		assertEquals(1.7, geo.polygons[2].lines[0].points[1].latitude);
+		asserts.assert(geo.polygons[2].lines[0].points[0].longitude == 2.5);
+		asserts.assert(geo.polygons[2].lines[0].points[0].latitude == 1.6);
+		asserts.assert(geo.polygons[2].lines[0].points[1].longitude == 2.6);
+		asserts.assert(geo.polygons[2].lines[0].points[1].latitude == 1.7);
+		return asserts.done();
 	}
 		
-	function testGeometryCollection() {
+	public function geometryCollection() {
 		
 		var collection = new GeometryCollection([
 			new Point(11, 21),
@@ -173,12 +186,13 @@ class RunTests extends TestCase{
 		for(point in collection) {
 			// $type(point); // geojson.Point, the compiler knows it is a `Point` if you are not mixing different types
 			count++;
-			assertEquals(10. + count, point.latitude);
-			assertEquals(20. + count, point.longitude);
+			asserts.assert(point.latitude == 10. + count);
+			asserts.assert(point.longitude == 20. + count);
 		}
+		return asserts.done();
 	}
 	
-	function testGeometryCollectionMixed() {
+	public function geometryCollectionMixed() {
 		
 		// Use `Geometry` as the type parameter
 		// when using GeometryCollection for mixed types
@@ -193,61 +207,62 @@ class RunTests extends TestCase{
 		
 		for(geometry in collection) {
 			// Use a generic function to correctly type the collection objects (no runtime performance penalty)
-			check(geometry);
+			check(asserts, geometry);
 			
 			// or use the provided static function which wraps the geometry in a Haxe enum (has runtime performance penalty)
 			switch GeometryCollection.get(geometry) {
 				case Point(geometry):
-					assertEquals(1.1, geometry.latitude);
-					assertEquals(1.2, geometry.longitude);
+					asserts.assert(geometry.latitude == 1.1);
+					asserts.assert(geometry.longitude == 1.2);
 				case MultiPoint(geometry):
-					assertEquals(2.1 ,geometry.points[0].latitude);
-					assertEquals(2.2 ,geometry.points[0].longitude);
+					asserts.assert(geometry.points[0].latitude == 2.1);
+					asserts.assert(geometry.points[0].longitude == 2.2);
 				case LineString(geometry):
-					assertEquals(3.1 ,geometry.points[0].latitude);
-					assertEquals(3.2 ,geometry.points[0].longitude);
+					asserts.assert(geometry.points[0].latitude == 3.1);
+					asserts.assert(geometry.points[0].longitude == 3.2);
 				case MultiLineString(geometry):
-					assertEquals(4.1 ,geometry.lines[0].points[0].latitude);
-					assertEquals(4.2 ,geometry.lines[0].points[0].longitude);
+					asserts.assert(geometry.lines[0].points[0].latitude == 4.1);
+					asserts.assert(geometry.lines[0].points[0].longitude == 4.2);
 				case Polygon(geometry):
-					assertEquals(5.1 ,geometry.lines[0].points[0].latitude);
-					assertEquals(5.2 ,geometry.lines[0].points[0].longitude);
+					asserts.assert(geometry.lines[0].points[0].latitude == 5.1);
+					asserts.assert(geometry.lines[0].points[0].longitude == 5.2);
 				case MultiPolygon(geometry):
-					assertEquals(6.1 ,geometry.polygons[0].lines[0].points[0].latitude);
-					assertEquals(6.2 ,geometry.polygons[0].lines[0].points[0].longitude);
+					asserts.assert(geometry.polygons[0].lines[0].points[0].latitude == 6.1);
+					asserts.assert(geometry.polygons[0].lines[0].points[0].longitude == 6.2);
 			}
 		}
-		
+		return asserts.done();
 	}
 	
-	inline function check<T:Geometry.Typed<T>>(geometry:T) {
+	inline function check<T:Geometry.Typed<T>>(asserts:AssertionBuffer, geometry:T) {
 		// $type(geometry); // check.T, but it will be correctly typed inside the switch block
 		switch geometry.type {
 			case Point:
 				// $type(geometry); // geojson.Point
-				assertEquals(1.1, geometry.latitude);
-				assertEquals(1.2, geometry.longitude);
+				asserts.assert(geometry.latitude == 1.1);
+				asserts.assert(geometry.longitude == 1.2);
 			case MultiPoint:
 				// $type(geometry); // geojson.MultiPoint
-				assertEquals(2.1 ,geometry.points[0].latitude);
-				assertEquals(2.2 ,geometry.points[0].longitude);
+				asserts.assert(geometry.points[0].latitude == 2.1);
+				asserts.assert(geometry.points[0].longitude == 2.2);
 			case LineString:
 				// $type(geometry); // geojson.LineString
-				assertEquals(3.1 ,geometry.points[0].latitude);
-				assertEquals(3.2 ,geometry.points[0].longitude);
+				asserts.assert(geometry.points[0].latitude == 3.1);
+				asserts.assert(geometry.points[0].longitude == 3.2);
 			case MultiLineString:
 				// $type(geometry); // geojson.MultiLineString
-				assertEquals(4.1 ,geometry.lines[0].points[0].latitude);
-				assertEquals(4.2 ,geometry.lines[0].points[0].longitude);
+				asserts.assert(geometry.lines[0].points[0].latitude == 4.1);
+				asserts.assert(geometry.lines[0].points[0].longitude == 4.2);
 			case Polygon:
 				// $type(geometry); // geojson.Polygon
-				assertEquals(5.1 ,geometry.lines[0].points[0].latitude);
-				assertEquals(5.2 ,geometry.lines[0].points[0].longitude);
+				asserts.assert(geometry.lines[0].points[0].latitude == 5.1);
+				asserts.assert(geometry.lines[0].points[0].longitude == 5.2);
 			case MultiPolygon:
 				// $type(geometry); // geojson.MultiPolygon
-				assertEquals(6.1 ,geometry.polygons[0].lines[0].points[0].latitude);
-				assertEquals(6.2 ,geometry.polygons[0].lines[0].points[0].longitude);
+				asserts.assert(geometry.polygons[0].lines[0].points[0].latitude == 6.1);
+				asserts.assert(geometry.polygons[0].lines[0].points[0].longitude == 6.2);
 		}
+		return asserts.done();
 	}
 	
 }
