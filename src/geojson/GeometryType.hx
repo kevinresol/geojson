@@ -9,6 +9,9 @@ abstract GeometryType<C>(String) to String {
 	var MultiPoint:GeometryType<geojson.MultiPoint> = 'MultiPoint';
 	var MultiLineString:GeometryType<geojson.MultiLineString> = 'MultiLineString';
 	var MultiPolygon:GeometryType<geojson.MultiPolygon> = 'MultiPolygon';
+	
+	@:op(A == B)
+	function eq(s:String):Bool;
 }
 
 

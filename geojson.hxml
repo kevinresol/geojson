@@ -1,4 +1,0 @@
--cp tests
--main RunTests
--neko bin/tests.n
--lib geojson
