@@ -16,7 +16,7 @@ abstract Coordinates(Array<Float>) to Array<Float> {
 	inline function set_longitude(v) return this[0] = v;
 	
 	
-	// https://www.movable-type.co.uk/scripts/latlong.html
+	// https://www.movable-type.co.uk/scripts/latlong.html#ortho-dist
 	public function distanceTo(that:Coordinates, radius:Float) {
 		var lat1 = latitude * TO_RADIANS;
 		var lat2 = that.latitude * TO_RADIANS;
@@ -28,7 +28,22 @@ abstract Coordinates(Array<Float>) to Array<Float> {
 		return 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)) * radius;
 	}
 	
-	// https://www.movable-type.co.uk/scripts/latlong.html
+	// https://www.movable-type.co.uk/scripts/latlong.html#dest-point
+	/**
+	 * [Description]
+	 * @param distance normalized distance
+	 * @param bearing in degrees
+	 */
+	public inline function destination(distance:Float, bearing:Float) {
+		var lat1 = latitude * TO_RADIANS;
+		var long1 = longitude * TO_RADIANS;
+		var bearing = bearing * TO_RADIANS;
+		var lat2 = Math.asin(Math.sin(lat1) * Math.cos(distance) + Math.cos(lat1) * Math.sin(distance) * Math.cos(bearing));
+		var long2 = long1 + Math.atan2(Math.sin(bearing) * Math.sin(distance) * Math.cos(lat1), Math.cos(distance) - Math.sin(lat1) * Math.sin(lat2));
+		return new Coordinates(lat2 * TO_DEGREES, long2 * TO_DEGREES);
+	}
+	
+	// https://www.movable-type.co.uk/scripts/latlong.html#bearing
 	public function initialBearingTo(that:Coordinates) {
 		var lat1 = latitude * TO_RADIANS;
 		var lat2 = that.latitude * TO_RADIANS;

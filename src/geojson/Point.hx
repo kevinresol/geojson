@@ -36,6 +36,9 @@ abstract Point(GeoJson<Point, Coordinates>) to GeoJson<Point, Coordinates> {
 	public inline function distanceTo(that:Point, radius:Float)
 		return this.coordinates.distanceTo(that.coordinates, radius);
 	
+	public inline function destination(distance:Float, bearing:Float):Point
+		return this.coordinates.destination(distance, bearing);
+	
 	public function initialBearingTo(that:Point)
 		return this.coordinates.initialBearingTo(that.coordinates);
 	
