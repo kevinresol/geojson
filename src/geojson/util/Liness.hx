@@ -1,5 +1,7 @@
 package geojson.util;
 
+import geojson.*;
+
 @:forward(iterator, length, slice, concat)
 abstract Liness(Array<Lines>) from Array<Lines> to Array<Lines> from Array<Array<Line>> {
 	@:from
@@ -13,4 +15,7 @@ abstract Liness(Array<Lines>) from Array<Lines> to Array<Lines> from Array<Array
 		
 	inline function get_lines() return this;
 	inline function set_lines(v) return this = v;
+	
+	@:to inline function toPolygonArray():Array<Polygon>
+		return [for(lines in this) new Polygon(lines)];
 }
