@@ -3,7 +3,7 @@ package geojson;
 import haxe.DynamicAccess;
 
 @:forward(id, geometry, properties)
-abstract Feature(FeatureObject) from FeatureObject to FeatureObject {
+abstract Feature<T:Geometry.Typed<T>>(FeatureObject<T>) from FeatureObject<T> to FeatureObject<T> {
 	public inline function new(geometry, ?id, ?properties)
 		this = {
 			type: 'Feature',
@@ -11,11 +11,13 @@ abstract Feature(FeatureObject) from FeatureObject to FeatureObject {
 			geometry: geometry,
 			properties: properties,
 		}
+		
+	public inline function get() return GeometryCollection.get(this.geometry);
 }
 
-private typedef FeatureObject = {
+private typedef FeatureObject<T:Geometry.Typed<T>> = {
 	type:String,
 	id:String,
-	geometry:Geometry,
+	geometry:T,
 	properties:DynamicAccess<String>,
 }

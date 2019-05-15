@@ -1,7 +1,7 @@
 package geojson;
 
 @:forward(features)
-abstract FeatureCollection(FeatureCollectionObject) from FeatureCollectionObject to FeatureCollectionObject {
+abstract FeatureCollection<T:Geometry.Typed<T>>(FeatureCollectionObject<T>) from FeatureCollectionObject<T> to FeatureCollectionObject<T> {
 	public inline function new(features)
 		this = {
 			type: 'FeatureCollection',
@@ -11,7 +11,7 @@ abstract FeatureCollection(FeatureCollectionObject) from FeatureCollectionObject
 	public inline function iterator() return this.features.iterator();
 }
 
-private typedef FeatureCollectionObject = {
+private typedef FeatureCollectionObject<T:Geometry.Typed<T>> = {
 	type:String,
-	features:Array<Feature>,
+	features:Array<Feature<T>>,
 }
