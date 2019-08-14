@@ -1,10 +1,11 @@
 package geojson;
 
 import haxe.DynamicAccess;
+import haxe.extern.*;
 
 @:forward(id, geometry, properties)
-abstract Feature<T:Geometry.Typed<T>>(FeatureObject<T>) from FeatureObject<T> to FeatureObject<T> {
-	public inline function new(geometry, ?properties:DynamicAccess<Any>, ?id:String) {
+abstract Feature<T:Geometry.Typed<T>, Data>(FeatureObject<T, Data>) from FeatureObject<T, Data> to FeatureObject<T, Data> {
+	public inline function new(geometry, ?properties:Data, ?id:FeatureId) {
 		this = {
 			type: 'Feature',
 			geometry: geometry,
@@ -16,9 +17,11 @@ abstract Feature<T:Geometry.Typed<T>>(FeatureObject<T>) from FeatureObject<T> to
 	public inline function get() return GeometryCollection.get(this.geometry);
 }
 
-private typedef FeatureObject<T:Geometry.Typed<T>> = {
+private typedef FeatureObject<T:Geometry.Typed<T>, Data> = {
 	type:String,
 	geometry:T,
-	properties:DynamicAccess<Any>,
-	?id:String,
+	properties:Data,
+	?id:FeatureId,
 }
+
+typedef FeatureId = EitherType<String, Int>;
