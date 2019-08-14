@@ -26,7 +26,7 @@ abstract MultiPolygon(GeoJson<MultiPolygon, Liness>) to GeoJson<MultiPolygon, Li
 	inline function get_polygons() return this.coordinates;
 	inline function set_polygons(v) return this.coordinates = v;
 	inline function get_type() return this.type;
-	@:to inline function toGeoJson():Geometry return cast this;
+	@:to public inline function toGeoJson():Geometry return cast this;
 	
 	public function concat(others:Array<Polygon>) {
 		return new MultiPolygon(polygons.concat([for(polygon in others) polygon.lines]));
