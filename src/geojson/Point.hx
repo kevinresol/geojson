@@ -33,6 +33,9 @@ abstract Point(GeoJson<Point, Coordinates>) to GeoJson<Point, Coordinates> {
 	inline function get_type() return this.type;
 	@:to public inline function toGeoJson():Geometry return cast this;
 	
+	public function eq(other:Point):Bool
+		return latitude == other.latitude && longitude == other.longitude;
+	
 	public inline function distanceTo(that:Point, radius:Float)
 		return this.coordinates.distanceTo(that.coordinates, radius);
 	
