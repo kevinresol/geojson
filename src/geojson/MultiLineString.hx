@@ -27,9 +27,16 @@ abstract MultiLineString(GeoJson<MultiLineString, Array<Line>>) to GeoJson<Multi
 	@:from
 	public static function fromRepresentation(rep:tink.json.Representation<{type:String, coordinates:Array<Line>}>):MultiLineString {
 		switch rep.get() {
-			case v if(v.type == 'MultiLineString'): return cast v;
+			case v if(is(v)): return cast v;
 			default: throw 'Invalid MultiLineString';
 		}
 	}
 	#end
+	
+	public static function is(v:Dynamic):Bool {
+		if(v.type != 'MultiLineString') return false;
+		if(!Std.is(v.coordinates, Array)) return false;
+		for(v in (v.coordinates:Array<Dynamic>)) if(!Line.is(v)) return false;
+		return true;
+	}
 }

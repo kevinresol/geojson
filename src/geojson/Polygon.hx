@@ -101,10 +101,16 @@ abstract Polygon(GeoJson<Polygon, Array<Line>>) to GeoJson<Polygon, Array<Line>>
 	@:from
 	public static function fromRepresentation(rep:tink.json.Representation<{type:String, coordinates:Array<Line>}>):Polygon {
 		switch rep.get() {
-			case v if(v.type == 'Polygon'): return cast v;
+			case v if(is(v)): return cast v;
 			default: throw 'Invalid Polygon';
 		}
 	}
 	#end
 	
+	public static function is(v:Dynamic):Bool {
+		if(v.type != 'Polygon') return false;
+		if(!Std.is(v.coordinates, Array)) return false;
+		for(v in (v.coordinates:Array<Dynamic>)) if(!Line.is(v)) return false;
+		return true;
+	}
 }

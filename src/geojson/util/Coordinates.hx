@@ -85,4 +85,8 @@ abstract Coordinates(Array<Float>) to Array<Float> {
 		}
 	}
 	#end
+	
+	public static function is(v:Dynamic):Bool {
+		return Std.is(v, Array) && v.length == 2 && Std.is(v[0], Float) && Std.is(v[1], Float);
+	}
 }

@@ -17,6 +17,7 @@ class RunTests {
 	static function main() {
 		Runner.run(TestBatch.make([
 			new RunTests(),
+			new Validation(),
 			#if tink_json new TinkJson(), #end
 		])).handle(Runner.exit);
 	}

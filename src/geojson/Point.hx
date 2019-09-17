@@ -60,9 +60,13 @@ abstract Point(GeoJson<Point, Coordinates>) to GeoJson<Point, Coordinates> {
 	@:from
 	public static function fromRepresentation(rep:tink.json.Representation<{type:String, coordinates:Coordinates}>):Point {
 		switch rep.get() {
-			case v if(v.type == 'Point'): return cast v;
+			case v if(is(v)): return cast v;
 			default: throw 'Invalid Point';
 		}
 	}
 	#end
+	
+	public static function is(v:Dynamic):Bool {
+		return v.type == 'Point' && Coordinates.is(v.coordinates);
+	}
 }

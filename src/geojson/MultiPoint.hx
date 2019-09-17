@@ -27,9 +27,16 @@ abstract MultiPoint(GeoJson<MultiPoint, Array<Coordinates>>) to GeoJson<MultiPoi
 	@:from
 	public static function fromRepresentation(rep:tink.json.Representation<{type:String, coordinates:Array<Coordinates>}>):MultiPoint {
 		switch rep.get() {
-			case v if(v.type == 'MultiPoint'): return cast v;
+			case v if(is(v)): return cast v;
 			default: throw 'Invalid MultiPoint';
 		}
 	}
 	#end
+	
+	public static function is(v:Dynamic):Bool {
+		if(v.type != 'MultiPoint') return false;
+		if(!Std.is(v.coordinates, Array)) return false;
+		for(v in (v.coordinates:Array<Dynamic>)) if(!Coordinates.is(v)) return false;
+		return true;
+	}
 }

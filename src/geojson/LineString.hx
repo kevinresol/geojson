@@ -50,9 +50,16 @@ abstract LineString(GeoJson<LineString, Array<Coordinates>>) to GeoJson<LineStri
 	@:from
 	public static function fromRepresentation(rep:tink.json.Representation<{type:String, coordinates:Line}>):LineString {
 		switch rep.get() {
-			case v if(v.type == 'LineString'): return cast v;
+			case v if(is(v)): return cast v;
 			default: throw 'Invalid LineString';
 		}
 	}
 	#end
+	
+	public static function is(v:Dynamic):Bool {
+		if(v.type != 'LineString') return false;
+		if(!Std.is(v.coordinates, Array)) return false;
+		for(v in (v.coordinates:Array<Dynamic>)) if(!Coordinates.is(v)) return false;
+		return true;
+	}
 }

@@ -18,4 +18,11 @@ abstract Liness(Array<Lines>) from Array<Lines> to Array<Lines> from Array<Array
 	
 	@:to inline function toPolygonArray():Array<Polygon>
 		return [for(lines in this) new Polygon(lines)];
+		
+	public static function is(v:Dynamic):Bool {
+		if(!Std.is(v, Array)) return false;
+		if(v.length == 0) return false;
+		for(v in (v:Array<Dynamic>)) if(!Lines.is(v)) return false;
+		return true;
+	}
 }

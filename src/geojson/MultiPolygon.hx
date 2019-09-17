@@ -46,9 +46,14 @@ abstract MultiPolygon(GeoJson<MultiPolygon, Liness>) to GeoJson<MultiPolygon, Li
 	@:from
 	public static function fromRepresentation(rep:tink.json.Representation<{type:String, coordinates:Liness}>):MultiPolygon {
 		switch rep.get() {
-			case v if(v.type == 'MultiPolygon'): return cast v;
+			case v if(is(v)): return cast v;
 			default: throw 'Invalid MultiPolygon';
 		}
 	}
 	#end
+	
+	public static function is(v:Dynamic):Bool {
+		// TODO: also check if each lines are valid ring (first and last coordinates are identical)
+		return v.type == 'MultiPolygon' && Liness.is(v.coordinates);
+	}
 }
