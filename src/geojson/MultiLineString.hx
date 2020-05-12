@@ -13,6 +13,12 @@ abstract MultiLineString(GeoJson<MultiLineString, Array<Line>>) to GeoJson<Multi
 			coordinates: lines,
 		}
 		
+		
+	@:from
+	public static inline function fromLineStrings(lines:Array<LineString>) {
+		return new MultiLineString([for(line in lines) line.points]);
+	}
+		
 	inline function get_lines() return this.coordinates;
 	inline function set_lines(v) return this.coordinates = v;
 	inline function get_type() return this.type;

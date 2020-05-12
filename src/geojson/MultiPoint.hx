@@ -13,6 +13,12 @@ abstract MultiPoint(GeoJson<MultiPoint, Array<Coordinates>>) to GeoJson<MultiPoi
 			coordinates: points,
 		}
 		
+		
+	@:from
+	public static inline function fromPoints(points:Array<Point>) {
+		return new MultiPoint([for(point in points) point.coordinates]);
+	}
+		
 	inline function get_points()return this.coordinates;
 	inline function set_points(v)return this.coordinates = v;
 	inline function get_type() return this.type;

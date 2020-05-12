@@ -18,6 +18,7 @@ class RunTests {
 		Runner.run(TestBatch.make([
 			new RunTests(),
 			new Validation(),
+			new WkbTest(),
 			#if tink_json new TinkJson(), #end
 		])).handle(Runner.exit);
 	}
@@ -36,7 +37,7 @@ class RunTests {
 	
 	public function point() {
 		var geo = new Point(1.2, 2.1);
-		asserts.assert(geo.type == 'Point');
+		asserts.assert(geo.type == Point);
 		asserts.assert(geo.longitude == 2.1);
 		asserts.assert(geo.latitude == 1.2);
 		
@@ -54,7 +55,7 @@ class RunTests {
 	
 	public function multiPoint() {
 		var geo = new MultiPoint([c(1.2, 2.1),c(1.3, 2.2)]);
-		asserts.assert(geo.type == 'MultiPoint');
+		asserts.assert(geo.type == MultiPoint);
 		asserts.assert(geo.points[0].longitude == 2.1);
 		asserts.assert(geo.points[0].latitude == 1.2);
 		asserts.assert(geo.points[1].longitude == 2.2);
@@ -68,7 +69,7 @@ class RunTests {
 	
 	public function lineString() {
 		var geo = new LineString([c(1.2, 2.1),c(1.3, 2.2)]);
-		asserts.assert(geo.type == 'LineString');
+		asserts.assert(geo.type == LineString);
 		asserts.assert(geo.points[0].longitude == 2.1);
 		asserts.assert(geo.points[0].latitude == 1.2);
 		asserts.assert(geo.points[1].longitude == 2.2);
@@ -83,7 +84,7 @@ class RunTests {
 	
 	public function multiLineString() {
 		var geo = new MultiLineString([[c(1.2, 2.1),c(1.3, 2.2)], [c(1.4, 2.3),c(1.5, 2.4)]]);
-		asserts.assert(geo.type == 'MultiLineString');
+		asserts.assert(geo.type == MultiLineString);
 		asserts.assert(geo.lines[0].points[0].longitude == 2.1);
 		asserts.assert(geo.lines[0].points[0].latitude == 1.2);
 		asserts.assert(geo.lines[0].points[1].longitude == 2.2);
@@ -103,7 +104,7 @@ class RunTests {
 	
 	public function polygon() {
 		var geo = new Polygon([[c(1.2, 2.1),c(1.3, 2.2)]]);
-		asserts.assert(geo.type == 'Polygon');
+		asserts.assert(geo.type == Polygon);
 		asserts.assert(geo.lines[0].points[0].longitude == 2.1);
 		asserts.assert(geo.lines[0].points[0].latitude == 1.2);
 		asserts.assert(geo.lines[0].points[1].longitude == 2.2);
@@ -136,7 +137,7 @@ class RunTests {
 	
 	public function multiRingPolygon() {
 		var geo = new Polygon([[c(1.2, 2.1),c(1.3, 2.2)], [c(1.4, 2.3),c(1.5, 2.4)]]);
-		asserts.assert(geo.type == 'Polygon');
+		asserts.assert(geo.type == Polygon);
 		asserts.assert(geo.lines[0].points[0].longitude == 2.1);
 		asserts.assert(geo.lines[0].points[0].latitude == 1.2);
 		asserts.assert(geo.lines[0].points[1].longitude == 2.2);
@@ -159,7 +160,7 @@ class RunTests {
 			[[c(1.2, 2.1),c(1.3, 2.2)]], [[c(1.4, 2.3),c(1.5, 2.4)]],
 			new Lines([new Line([c(1.6, 2.5),c(1.7, 2.6)])])
 		]);
-		asserts.assert(geo.type == 'MultiPolygon');
+		asserts.assert(geo.type == MultiPolygon);
 		asserts.assert(geo.polygons[0].lines[0].points[0].longitude == 2.1);
 		asserts.assert(geo.polygons[0].lines[0].points[0].latitude == 1.2);
 		asserts.assert(geo.polygons[0].lines[0].points[1].longitude == 2.2);
@@ -173,6 +174,8 @@ class RunTests {
 		asserts.assert(geo.polygons[2].lines[0].points[0].latitude == 1.6);
 		asserts.assert(geo.polygons[2].lines[0].points[1].longitude == 2.6);
 		asserts.assert(geo.polygons[2].lines[0].points[1].latitude == 1.7);
+		
+		
 		return asserts.done();
 	}
 		
